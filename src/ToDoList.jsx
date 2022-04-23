@@ -46,22 +46,24 @@ class ToDoList extends React.Component{
 
 
        handleTaskupdateName = (taskId, newName) => {
-          console.log(newName,taskId);
-        //  const editedTaskList = this.state.tasks.map(task => {
-        //    if (task.id === taskId ) {
-        //      return console.log(newName);
-        //       //  this.setState({
-        //       //    ...this.state, taskLabel:newName
-                 
-        //       //  })
-              
-             
-        //    }
-        //    return task; 
+          console.log('new name',newName,taskId);
+          const editedTaskList = this.state.tasks.map(task => {
+           if (task.id === taskId ) {
+             return {...task,taskLabel:newName}
+           }
+           return task;
           
-        //   })
-
+          })
+          this.setState({
+            ...this.state, tasks: editedTaskList
+          })
        }
+
+       
+      
+
+
+       
     
       render(){
     
