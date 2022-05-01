@@ -31,9 +31,25 @@ class ToDoList extends React.Component{
         ...this.state.tasks, 
         tasks: updatedTask
        });
+
+
+       let localStoragetasks;
+       if (localStorage.getItem('localStoragetasks')=== null){
+        localStoragetasks = [];
+       }
+       else{
+         localStoragetasks = JSON.parse(localStorage.getItem('localStoragetasks'));
+       }
+       localStoragetasks.push(newTask);
+       localStorage.setItem('localStoragetasks', JSON.stringify(localStoragetasks));
+      //  const taskJSON = JSON.stringify(updatedTask);
+      //  localStorage.setItem('tasks', taskJSON);
+
+      
     
        }
 
+       //let getLocalstorageTasks = JSON.parse(localStorage.getItem('tasks')
 
        handleTaskDelete = (taskId) => {
            const updatedTasks = this.state.tasks.filter(task=> task.id !== taskId);
@@ -41,6 +57,15 @@ class ToDoList extends React.Component{
                ...this.state,
                tasks:updatedTasks
            })
+
+          // if (taskId === JSON.parse(localStorage.getItem('tasks.id')) {
+          //     localStorage.removeItem('');
+          // }
+          let updatedTasksLocalStorage = JSON.parse(localStorage.getItem('localStoragetasks'));  
+          let taskTobeDeleted = updatedTasksLocalStorage.findIndex(task=> task.id === taskId);
+          updatedTasksLocalStorage.splice(taskTobeDeleted, 1);
+          localStorage.setItem('localStoragetasks', JSON.stringify(updatedTasksLocalStorage));
+          JSON.parse(localStorage.getItem('localStorage'));
 
        }
 
@@ -70,7 +95,9 @@ class ToDoList extends React.Component{
         return(
         <>
           <TaskForm  onAddButtonClick = {this.createTaskList}/>
-          <TaskList tasks = {this.state.tasks} onTaskDelete = {this.handleTaskDelete} onTaskEditName = {this.handleTaskupdateName} />
+          {/* <TaskList tasks = {this.state.tasks} onTaskDelete = {this.handleTaskDelete} onTaskEditName = {this.handleTaskupdateName} /> */}
+          <TaskList tasks = {JSON.parse(localStorage.getItem('localStoragetasks'))} onTaskDelete = {this.handleTaskDelete} onTaskEditName = {this.handleTaskupdateName} />
+
         </>
         );
     
